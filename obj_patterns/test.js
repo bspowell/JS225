@@ -1,19 +1,17 @@
-let RECTANGLE = {
-  area() {
-    return this.width * this.height;
-  },
-  perimeter() {
-    return 2 * (this.width + this.height);
-  },
+
+function NewArray() {}
+NewArray.prototype = Object.create(Object.getPrototypeOf([]));
+
+NewArray.prototype.first = function() {
+  return this[0];
 };
 
-function Rectangle(width, height) {
-  this.width = width;
-  this.height = height;
-  this.area = RECTANGLE.area.call(this);
-  this.perimeter = RECTANGLE.perimeter.call(this);
-}
+let newArr = new NewArray();
+let oldArr = new Array();
 
-let rect1 = new Rectangle(2, 3);
-console.log(rect1.area);
-console.log(rect1.perimeter);
+oldArr.push(5);
+newArr.push(5);
+oldArr.push(2);
+newArr.push(2);
+console.log(newArr.first());           // => 5
+console.log(oldArr.first());             // => undefined
