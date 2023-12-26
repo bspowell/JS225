@@ -1,18 +1,26 @@
-let computer = {
-  price: 30000,
-  shipping: 2000,
-  total() {
-    let tax = 3000;
-    function specialDiscount() {
-      if (this.price > 20000) {
-        return 1000;
-      } else {
-        return 0;
-      }
-    }
+let PetPrototype = {
+  init(animal, name) {
+    this.animal = animal;
+    this.name = name;
+    return this;
+  },
 
-    return this.price + this.shipping + tax - specialDiscount.call(computer);
+  sleep() {
+    console.log('I am sleeping')
+  },
+
+  wake() {
+    console.log('I am awake')
   }
-};
+}
 
-console.log(computer.total());
+
+let pudding = Object.create(PetPrototype).init("Cat", "Pudding");
+console.log(`I am a ${pudding.animal}. My name is ${pudding.name}.`);
+pudding.sleep(); // I am sleeping
+pudding.wake();  // I am awake
+
+let neptune = Object.create(PetPrototype).init("Fish", "Neptune");
+console.log(`I am a ${neptune.animal}. My name is ${neptune.name}.`);
+neptune.sleep(); // I am sleeping
+neptune.wake();  // I am awake
