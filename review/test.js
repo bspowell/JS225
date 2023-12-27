@@ -1,26 +1,40 @@
-let PetPrototype = {
-  init(animal, name) {
-    this.animal = animal;
-    this.name = name;
-    return this;
+let contacts = {
+  list: [],
+  add(name, gender) {
+    var contact = new Contact(name, gender);
+    this.list.push(contact);
   },
-
-  sleep() {
-    console.log('I am sleeping')
+  males() {
+    return this.list.filter(function(contact) {
+      return contact.gender === 'male';
+    });
   },
+  females() {
+    return this.list.filter(function(contact) {
+      return contact.gender === 'female';
+    });
+  },
+  filterByName(name) {
+    return this.list.filter(function(contact) {
+      return contact.hasName(name);
+    });
+  },
+};
 
-  wake() {
-    console.log('I am awake')
+function Contact(name, gender) {
+  return {
+    name,
+    gender,
+    hasName(name) {
+      return this.name === name;
+    }
   }
 }
 
-
-let pudding = Object.create(PetPrototype).init("Cat", "Pudding");
-console.log(`I am a ${pudding.animal}. My name is ${pudding.name}.`);
-pudding.sleep(); // I am sleeping
-pudding.wake();  // I am awake
-
-let neptune = Object.create(PetPrototype).init("Fish", "Neptune");
-console.log(`I am a ${neptune.animal}. My name is ${neptune.name}.`);
-neptune.sleep(); // I am sleeping
-neptune.wake();  // I am awake
+contacts.add('bob', 'male');
+contacts.add('joe', 'male');
+contacts.add('jen', 'female');
+contacts.add('elena', 'female');
+console.log(contacts.males())
+console.log(contacts.females())
+console.log(contacts.filterByName('bob'))
