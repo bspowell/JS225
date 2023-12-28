@@ -1,40 +1,23 @@
-let contacts = {
-  list: [],
-  add(name, gender) {
-    var contact = new Contact(name, gender);
-    this.list.push(contact);
-  },
-  males() {
-    return this.list.filter(function(contact) {
-      return contact.gender === 'male';
-    });
-  },
-  females() {
-    return this.list.filter(function(contact) {
-      return contact.gender === 'female';
-    });
-  },
-  filterByName(name) {
-    return this.list.filter(function(contact) {
-      return contact.hasName(name);
-    });
-  },
-};
-
-function Contact(name, gender) {
-  return {
-    name,
-    gender,
-    hasName(name) {
-      return this.name === name;
-    }
-  }
+function Person(name) {
+	this.name = name;
+}
+Person.prototype.sayhi = function () {
+	console.log('hi. my name is ' + this.name)
 }
 
-contacts.add('bob', 'male');
-contacts.add('joe', 'male');
-contacts.add('jen', 'female');
-contacts.add('elena', 'female');
-console.log(contacts.males())
-console.log(contacts.females())
-console.log(contacts.filterByName('bob'))
+function Teacher(name, specialization) {
+	Person.call(this, name)            // sets "inherited' pr from the parent class. 
+	this.specialization = specialization
+}
+
+Teacher.prototype = Object.create(Person.prototype)
+
+let person = new Person('bob');
+let teacher = new Teacher('joe', 'Math');
+
+console.log(teacher instanceof Person);     // logs true
+console.log(teacher instanceof Teacher);     // logs true
+console.log(teacher.constructor) // Function Person
+
+teacher.constructor = Teacher
+console.log(teacher.constructor) // Function Teacher
